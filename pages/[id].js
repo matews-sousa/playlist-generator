@@ -22,7 +22,6 @@ const GeneratePlaylistPage = () => {
   useEffect(() => {
     if (session) {
       spotify.getTrack(id).then(async (res) => {
-        console.log(res.body);
         setCurrentTrack(res.body);
         const playlistGenerated = await generatePlaylist(
           spotify,
@@ -39,10 +38,6 @@ const GeneratePlaylistPage = () => {
 
     setPlaylist(filtered);
   };
-
-  if (!session) {
-    return router.push("/api/auth/login");
-  }
 
   return (
     <Layout>
@@ -78,7 +73,7 @@ const GeneratePlaylistPage = () => {
         )}
       </Box>
 
-      <Player token={session?.user?.accessToken} trackUri={trackPlaying} />
+      <Player token={session?.accessToken} trackUri={trackPlaying} />
     </Layout>
   );
 };

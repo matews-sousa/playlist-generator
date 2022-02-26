@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Heading } from "@chakra-ui/react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Artist from "../components/Artist";
 import Layout from "../components/Layout";
@@ -15,21 +15,14 @@ export default function Home() {
   const [topArtists, setTopArtists] = useState([]);
   const [trackPlaying, setTrackPlaying] = useState("");
 
+  console.log(session);
+
   useEffect(() => {
-    if (session?.user?.accessToken) {
+    if (session?.accessToken) {
       spotify.getMyTopTracks().then((res) => setTopTracks(res.body.items));
       spotify.getMyTopArtists().then((res) => setTopArtists(res.body.items));
     }
   }, [session]);
-
-  if (!session) {
-    return (
-      <>
-        Not signed in <br />
-        <button onClick={() => signIn()}>Sign in</button>
-      </>
-    );
-  }
 
   return (
     <Layout>
@@ -62,7 +55,7 @@ export default function Home() {
           ))}
         </Box>
       </Flex>
-      <Player token={session?.user?.accessToken} trackUri={trackPlaying} />
+      <Player token={session?.accessToken} trackUri={trackPlaying} />
     </Layout>
   );
 }
