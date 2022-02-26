@@ -1,8 +1,16 @@
-import { Box, Heading, IconButton, Image, Spinner } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  HStack,
+  IconButton,
+  Image,
+  Spinner,
+} from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import CreatePlaylistForm from "../components/CreatePlaylistForm";
 import Layout from "../components/Layout";
 import Player from "../components/Player";
 import Track from "../components/Track";
@@ -41,7 +49,7 @@ const GeneratePlaylistPage = () => {
 
   return (
     <Layout>
-      <Box maxW="500px" position="relative">
+      <Box position="relative" w="100%">
         <IconButton
           icon={<AiOutlineClose />}
           position="absolute"
@@ -56,9 +64,15 @@ const GeneratePlaylistPage = () => {
           maxH={300}
           objectFit="cover"
         />
-        <Heading>{currentTrack?.name}</Heading>
+        <HStack justifyContent="space-between" mt={2}>
+          <Heading as="h2" size="lg">
+            {currentTrack?.name}
+          </Heading>
+
+          <CreatePlaylistForm playlist={playlist} />
+        </HStack>
       </Box>
-      <Box maxW="500px" mt={10}>
+      <Box mt={10}>
         {loading ? (
           <Spinner />
         ) : (

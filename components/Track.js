@@ -6,7 +6,7 @@ const Track = ({ track, select, deleteTrack }) => {
     <Flex
       alignItems="center"
       justifyContent="space-between"
-      maxW="500px"
+      w="100%"
       my={2}
       bgColor="blue.100"
       p={1}
@@ -28,7 +28,7 @@ const Track = ({ track, select, deleteTrack }) => {
       </Flex>
       <Flex>
         <IconButton
-          aria-label="Play Preview"
+          aria-label="Play Track"
           icon={<BsFillPlayFill />}
           rounded="full"
           fontSize={22}
@@ -37,7 +37,7 @@ const Track = ({ track, select, deleteTrack }) => {
         />
         {deleteTrack && (
           <IconButton
-            aria-label="Play Preview"
+            aria-label="Delete Track"
             icon={<BsTrashFill />}
             rounded="full"
             fontSize={22}

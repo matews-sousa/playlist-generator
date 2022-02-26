@@ -23,7 +23,6 @@ export default function App({
 
 function Auth({ children }) {
   const { data: session, status } = useSession();
-  console.log(session);
   const isUser = !!session?.user;
   useEffect(() => {
     if (status === "loading") return;
