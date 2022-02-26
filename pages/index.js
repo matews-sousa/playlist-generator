@@ -15,8 +15,6 @@ export default function Home() {
   const [topArtists, setTopArtists] = useState([]);
   const [trackPlaying, setTrackPlaying] = useState("");
 
-  console.log(session);
-
   useEffect(() => {
     if (session?.accessToken) {
       spotify.getMyTopTracks().then((res) => setTopTracks(res.body.items));

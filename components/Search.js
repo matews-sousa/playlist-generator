@@ -9,6 +9,7 @@ import {
   Image,
   Center,
   FormLabel,
+  FormControl,
 } from "@chakra-ui/react";
 import useSpotify from "../hooks/useSpotify";
 import Link from "next/link";
@@ -24,12 +25,9 @@ const Search = () => {
     const delayDebounceFn = setTimeout(() => {
       if (searchValue) {
         spotify
-          .searchTracks(searchValue, { limit: 10, offset: 1 })
+          .searchTracks(searchValue, { limit: 10, offset: 0 })
           .then((res) => {
-            const sortPopularity = res.body.tracks.items.sort((a, b) =>
-              a.popularity < b.popularity ? 1 : -1
-            );
-            setItems(sortPopularity);
+            setItems(res.body.tracks.items);
             setLoading(false);
           });
       } else {
@@ -42,10 +40,8 @@ const Search = () => {
 
   return (
     <Box>
-      <Box>
-        <FormLabel as="h3" size="lg">
-          Search for a song
-        </FormLabel>
+      <FormControl>
+        <FormLabel size="lg">Search for a song</FormLabel>
         <Input onChange={(e) => setSearchValue(e.target.value)} />
         {searchValue && (
           <Box top="10" bgColor="white" w="full" boxShadow="2xl">
@@ -79,7 +75,7 @@ const Search = () => {
             )}
           </Box>
         )}
-      </Box>
+      </FormControl>
     </Box>
   );
 };
