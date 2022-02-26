@@ -1,6 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { SessionProvider, signIn, useSession } from "next-auth/react";
 import { useEffect } from "react";
+import LoadingPage from "../components/LoadingPage";
 
 export default function App({
   Component,
@@ -35,5 +36,5 @@ function Auth({ children }) {
 
   // Session is being fetched, or no user.
   // If no user, useEffect() will redirect.
-  return <div>Loading...</div>;
+  return <LoadingPage />;
 }
