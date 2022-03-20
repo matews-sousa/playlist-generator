@@ -1,4 +1,11 @@
-import { Box, Button, Flex, Heading } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  Flex,
+  Heading,
+  SimpleGrid,
+  Spinner,
+} from "@chakra-ui/react";
 import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Artist from "../components/Artist";
@@ -14,12 +21,19 @@ export default function Home() {
   const [topTracks, setTopTracks] = useState([]);
   const [topArtists, setTopArtists] = useState([]);
   const [trackPlaying, setTrackPlaying] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (session?.accessToken) {
-      spotify.getMyTopTracks().then((res) => setTopTracks(res.body.items));
-      spotify.getMyTopArtists().then((res) => setTopArtists(res.body.items));
-    }
+    const fetchTopTracksAndArtists = async () => {
+      if (session?.accessToken) {
+        const topTracksRes = await spotify.getMyTopTracks();
+        setTopTracks(topTracksRes.body.items);
+        const topArtistsRes = await spotify.getMyTopArtists();
+        setTopArtists(topArtistsRes.body.items);
+      }
+      setLoading(false);
+    };
+    fetchTopTracksAndArtists();
   }, [session]);
 
   return (
@@ -33,26 +47,40 @@ export default function Home() {
         </Button>
       </Flex>
       <Search />
-      <Flex flexWrap="wrap" justifyContent="center" mt={10}>
-        <Box maxW="500px">
+      <SimpleGrid columns={[1, 1, 1, 2]} spacing={10} mt={6}>
+        <Flex flexDir="column" alignItems="center">
           <Heading as="h3" size="lg">
             Top Artists
           </Heading>
-          <Flex maxW="500px" flexWrap="wrap">
-            {topArtists.map((artist) => (
-              <Artist artist={artist} key={artist.name} />
-            ))}
+          <Flex flexWrap="wrap">
+            <SimpleGrid minChildWidth="130px">
+              {!loading ? (
+                topArtists.map((artist) => (
+                  <Artist artist={artist} key={artist.name} />
+                ))
+              ) : (
+                <Center mt={10}>
+                  <Spinner size="xl" />
+                </Center>
+              )}
+            </SimpleGrid>
           </Flex>
-        </Box>
-        <Box maxW="500px">
+        </Flex>
+        <Flex flexDir="column" alignItems="center">
           <Heading as="h3" size="lg">
             Top Tracks
           </Heading>
-          {topTracks.map((track) => (
-            <Track track={track} key={track.name} select={setTrackPlaying} />
-          ))}
-        </Box>
-      </Flex>
+          {!loading ? (
+            topTracks.map((track) => (
+              <Track track={track} key={track.name} select={setTrackPlaying} />
+            ))
+          ) : (
+            <Center mt={10}>
+              <Spinner size="xl" />
+            </Center>
+          )}
+        </Flex>
+      </SimpleGrid>
       <Player token={session?.accessToken} trackUri={trackPlaying} />
     </Layout>
   );

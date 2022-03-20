@@ -3,7 +3,7 @@ import React from "react";
 
 const Artist = ({ artist }) => {
   return (
-    <Box w="100px" m={2}>
+    <Box m={2}>
       <Image src={artist.images[0].url} w="100%" />
       <Text>{artist.name}</Text>
     </Box>

@@ -1,5 +1,6 @@
 import {
   Box,
+  Center,
   Heading,
   HStack,
   IconButton,
@@ -74,7 +75,12 @@ const GeneratePlaylistPage = () => {
       </Box>
       <Box mt={10}>
         {loading ? (
-          <Spinner />
+          <Center flexDir="column">
+            <Heading size="lg" mb={6}>
+              Generating playlist, please wait...
+            </Heading>
+            <Spinner size="xl" />
+          </Center>
         ) : (
           playlist?.map((track) => (
             <Track
