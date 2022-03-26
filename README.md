@@ -4,9 +4,19 @@ A Next.js application using the Spotify Web API to search tracks and generate pl
 
 ## Demo
 
-Use the app online at [https://spotify-playlist-generator-flax.vercel.app](https://spotify-playlist-generator-flax.vercel.app)
+
+Use the app online at [https://playlist-generator-three.vercel.app](https://playlist-generator-three.vercel.app)
 
 ![Application Demo](demo.gif)
+
+## Features
+
+- Users can view their top Artists and Tracks
+- Play and pause tracks in the browser
+- Search for a track by name
+- Generate a playlist based in the track selected
+- Remove tracks from the playlist generated
+- Create and save the playlist in the Spotify account
 
 ## Run the Project Locally
 
@@ -20,10 +30,11 @@ Use the app online at [https://spotify-playlist-generator-flax.vercel.app](https
   ```bash
   NEXT_PUBLIC_CLIENT_ID=[YOUR SPOTIFY APP CLIENT ID]    
   NEXT_PUBLIC_CLIENT_SECRET=[YOUR SPOTIFY APP CLIENT SECRET]
+  JWT_SECRET=[CREATE A JWT SECRET]
   ```
 - Run `npm run dev` and open [http://localhost:3000](http://localhost:3000) with your browser.
 
-## Technologies Used
+## Stack Used
 
 - [Next.js](https://nextjs.org) for SSR (Server Side Rendering)
 - [NextAuth.js](https://next-auth.js.org) for User Authentication
